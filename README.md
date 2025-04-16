@@ -19,9 +19,9 @@ the output files in `outputs` folder.
 
 ## Usage
 
-1. Place all your input files in the s`inputs` folder
+1. Place all  input files in the `inputs` folder
 2. Run the script:
 
 ```sh
-./uniqueint.py
+   python uniqueint.py
 ```
