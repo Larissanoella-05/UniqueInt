@@ -2,7 +2,7 @@
 
 import os
 import time
-import psutil  # For memory tracking
+import psutil # this is for memory tracking
 import sys
 
 class UniqueInt:
@@ -16,7 +16,7 @@ class UniqueInt:
         start_time = time.time()
         start_memory = UniqueInt.get_memory_usage()
         
-        # Create output directory if it doesn't exist
+    
         output_dir = os.path.dirname(output_file_path)
         if output_dir and not os.path.exists(output_dir):
             try:
@@ -28,7 +28,7 @@ class UniqueInt:
         try:
             integers = UniqueInt.readUniqueIntegers(input_file_path)
             
-            if integers is None:  # Error occurred during reading
+            if integers is None: 
                 return (0, 0)
                 
             UniqueInt.quicksort(integers, 0, len(integers) - 1)
@@ -56,17 +56,17 @@ class UniqueInt:
         Reads all the unique integers from the specified file path
         Uses a hash-like structure for faster uniqueness checking
         """
-        unique_dict = {}  # Using a dictionary for O(1) lookup time
+        unique_dict = {} 
         
         try:
             with open(file_path, 'r') as file:
                 for line in file:
-                    # Process the current line
+                
                     integer = UniqueInt.processLine(line)
                     if integer is not None:
                         unique_dict[integer] = True
                         
-            # Convert dictionary keys back to list
+            
             return list(unique_dict.keys())
             
         except IOError as e:
@@ -82,15 +82,15 @@ class UniqueInt:
         """
         stripped_line = UniqueInt.strip(line)
 
-        # Skip empty lines
+      
         if not stripped_line:
             return None
 
-        # Try to convert the line to an integer
+       
         if UniqueInt.is_integer(stripped_line):
             integer = int(stripped_line)
-            # Check if the integer is within the acceptable range
-            if integer >= -1023 and integer <= 1024:
+           
+            if integer >= -1023 and integer <= 1023:
                 return integer
 
         return None
@@ -113,7 +113,7 @@ class UniqueInt:
         print(f"Processing completed in {time_taken:.4f} seconds")
         print(f"Memory used: {memory_used:.2f} bytes")
 
-    # Standard functions
+
 
     @staticmethod
     def is_integer(s):
@@ -121,7 +121,7 @@ class UniqueInt:
         This function checks whether a string (which may contain a number sign
         as prefix) is a valid integer
         """
-        # may contain a number sign as prefix
+       
         if s[0] in ('-', '+'):
             return s[1:].isdigit()
 
@@ -135,11 +135,11 @@ class UniqueInt:
         result = ""
         i = 0
         space_characters = (' ', '\t', '\n')
-        # remove all leading whitespace characters
+        
         while i < len(s) and (s[i] in space_characters):
             i += 1
         j = len(s) - 1
-        # remove all trailing whitespace characterss
+    
         while j >= 0 and (s[j] in space_characters):
             j -= 1
         for k in range(i, j + 1):
@@ -190,10 +190,10 @@ class UniqueInt:
         than the original bubble sort (O(n log n) vs O(n²))
         """
         if low < high:
-            # Find the partition index
+           
             pi = UniqueInt.partition(arr, low, high)
             
-            # Sort elements before and after partition
+           
             UniqueInt.quicksort(arr, low, pi - 1)
             UniqueInt.quicksort(arr, pi + 1, high)
             
@@ -205,18 +205,18 @@ class UniqueInt:
         Returns the current memory usage in bytes
         """
         process = psutil.Process(os.getpid())
-        return process.memory_info().rss  # in bytes
+        return process.memory_info().rss  
 
 if __name__ == "__main__":
     input_folder = "inputs"
     output_folder = "outputs"
     
-    # Check if input folder exists
+    # This checks  if input folder exists
     if not os.path.exists(input_folder):
         print(f"Error: Input folder '{input_folder}' does not exist.")
         sys.exit(1)
         
-    # Create output folder if it doesn't exist
+    # It had to create output folder if it doesn't exist
     if not os.path.exists(output_folder):
         try:
             os.makedirs(output_folder)
@@ -231,13 +231,13 @@ if __name__ == "__main__":
     
     for filename in os.listdir(input_folder):
         if filename.endswith(".txt"):
-            # Remove the .txt extension
+            # .txt extension be removed
             basename = filename[:-4]
 
             input_path = os.path.join(input_folder, filename)
             output_path = os.path.join(output_folder, f"{basename}.txt_results.txt")
 
-            # Measure performance for each file
+            # performance for each file
             start_time = time.time()
             start_memory = UniqueInt.get_memory_usage()
             
